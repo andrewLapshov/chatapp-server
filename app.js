@@ -20,9 +20,13 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+// security headers
 app.use(helmet());
+
+// limit of users connections
 app.use(limiter);
 
+// socket.io handlers
 io.on('connection', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
     const { user, error } = addUser(name, room, socket.id);
