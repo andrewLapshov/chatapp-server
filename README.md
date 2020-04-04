@@ -22,4 +22,4 @@ Express.js,  Socket.IO.
 
 ### Демо приложения
 
-Деплой сервера доступен по этому адресу: https://chatapp--project.herokuapp.com/
+Настроен авто-деплой master ветки по адресу: https://chatapp--project.herokuapp.com/
