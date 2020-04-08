@@ -11,7 +11,7 @@ const addUser = (name, room, id) => {
 
   if (existingUser) return { error: USER_EXISTS };
 
-  const user = { name, room, id };
+  const user = { name, room, id, broadcaster: false };
   users.push(user);
 
   return { user };
@@ -28,9 +28,29 @@ const removeUser = (socket) => {
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
+const toggleBroadcaster = (socket) => {
+  const userIndex = users.findIndex((user) => user.id === socket.id);
+  if (userIndex !== -1) {
+    users[userIndex].broadcaster = !users[userIndex].broadcaster;
+    return users[userIndex];
+  }
+  return false;
+};
+
+const getBroadcaster = (socket, room) => {
+  return users.find((user) => {
+    if (socket) {
+      return user.id === socket.id && user.broadcaster === true;
+    }
+    return user.room === room && user.broadcaster === true;
+  });
+};
+
 module.exports = {
   addUser,
   getUserInfo,
   removeUser,
   getUsersInRoom,
+  toggleBroadcaster,
+  getBroadcaster,
 };
